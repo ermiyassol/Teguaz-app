@@ -11,7 +11,13 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Teguaz App',
       home: MainScreen(),
-      theme: ThemeData(),
+      theme: ThemeData(
+        primaryColor: Colors.indigoAccent,
+        // textTheme: TextTheme(
+        //     display1: TextStyle(
+        //         color: Colors.white,
+        //         fontSize: 17))
+      ),
       routes: {},
     );
   }
