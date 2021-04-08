@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:teguaz_app/screens/login_screen.dart';
 import 'package:teguaz_app/screens/search_screen.dart';
 import 'package:teguaz_app/widgets/about.dart';
+import 'package:teguaz_app/widgets/change_setting.dart';
 import 'package:teguaz_app/widgets/contact.dart';
 import 'package:teguaz_app/widgets/guide.dart';
 
@@ -47,12 +48,16 @@ class MainAppBar extends StatelessWidget
                 filterValues.contact) {
               Navigator.of(context)
                   .pushNamed(Contact.routeName);
+            } else if (selectedVal ==
+                filterValues.language) {
+              Navigator.of(context).pushNamed(
+                  ChangeSetting.routeName);
             }
           },
           icon: Icon(Icons.more_vert),
           itemBuilder: (_) => [
             PopupMenuItem(
-              child: Text('Change Language'),
+              child: Text('Change Setting'),
               value: filterValues.language,
             ),
             PopupMenuItem(

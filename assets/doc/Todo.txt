@@ -1,0 +1,2 @@
+
+- make the trip list asynchronously fetch trips from the database when some change occurs
