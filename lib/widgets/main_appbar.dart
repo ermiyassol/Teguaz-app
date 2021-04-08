@@ -1,0 +1,100 @@
+import 'package:flutter/material.dart';
+import 'package:teguaz_app/screens/login_screen.dart';
+import 'package:teguaz_app/screens/search_screen.dart';
+import 'package:teguaz_app/widgets/about.dart';
+import 'package:teguaz_app/widgets/change_setting.dart';
+import 'package:teguaz_app/widgets/contact.dart';
+import 'package:teguaz_app/widgets/guide.dart';
+
+enum filterValues {
+  language,
+  contact,
+  about,
+  guide
+}
+
+class MainAppBar extends StatelessWidget
+    with PreferredSizeWidget {
+  // const MainAppBar({Key key}) : super(key: key);
+
+  @override
+  // TODO: implement preferredSize
+  Size get preferredSize =>
+      Size.fromHeight(kToolbarHeight);
+  @override
+  Widget build(BuildContext context) {
+    return AppBar(
+      title: Text(
+        'Teguaz App',
+      ),
+      actions: [
+        IconButton(
+            icon: Icon(Icons.search),
+            onPressed: () {
+              Navigator.of(context).pushNamed(
+                  SearchScreen.routeName);
+            }),
+        PopupMenuButton(
+          onSelected: (selectedVal) {
+            if (selectedVal ==
+                filterValues.guide) {
+              Navigator.of(context)
+                  .pushNamed(Guide.routeName);
+            } else if (selectedVal ==
+                filterValues.about) {
+              Navigator.of(context)
+                  .pushNamed(About.routeName);
+            } else if (selectedVal ==
+                filterValues.contact) {
+              Navigator.of(context)
+                  .pushNamed(Contact.routeName);
+            } else if (selectedVal ==
+                filterValues.language) {
+              Navigator.of(context).pushNamed(
+                  ChangeSetting.routeName);
+            }
+          },
+          icon: Icon(Icons.more_vert),
+          itemBuilder: (_) => [
+            PopupMenuItem(
+              child: Text('Change Setting'),
+              value: filterValues.language,
+            ),
+            PopupMenuItem(
+              child: Text('Contact'),
+              value: filterValues.contact,
+            ),
+            PopupMenuItem(
+              child: Text('About'),
+              value: filterValues.about,
+            ),
+            PopupMenuItem(
+              child: Text('Guide'),
+              value: filterValues.guide,
+            )
+          ],
+        ),
+        IconButton(
+            icon: Icon(Icons.login),
+            onPressed: () {
+              // show
+              //
+              showDialog(
+                  context: context,
+                  builder: (ctx) => AlertDialog(
+                        title: Text(
+                          'Login Form',
+                          style: TextStyle(
+                              color: Theme.of(
+                                      context)
+                                  .primaryColor),
+                          textAlign:
+                              TextAlign.center,
+                        ),
+                        content: LoginScreen(),
+                      ));
+            })
+      ],
+    );
+  }
+}
