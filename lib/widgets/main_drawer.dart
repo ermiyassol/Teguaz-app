@@ -70,18 +70,87 @@ class MainDrawer extends StatelessWidget {
             ),
           ),
           SizedBox(
-            height: 20,
+            height: 10,
           ),
-          ListTile(
-            title: Text('Primary text'),
-            leading: Icon(Icons.label),
-            trailing: Text('Metadata'),
-          ),
-          ListTile(
-            title: Text('Primary text'),
-            leading: Icon(Icons.label),
-            trailing: Text('Metadata'),
-          ),
+          Column(
+            children: [
+              Container(
+                height: MediaQuery.of(context)
+                        .size
+                        .height *
+                    0.65,
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      ListTile(
+                        title: Text(
+                          'Company',
+                          style: TextStyle(
+                              fontSize: 16),
+                        ),
+                        leading:
+                            Icon(Icons.add_road),
+                        selected: true,
+                        onTap: () {},
+                      ),
+                      // Divider(),
+                      ListTile(
+                        title: Text(
+                          'Destination',
+                          style: TextStyle(
+                              fontSize: 16),
+                        ),
+                        leading: Icon(
+                            Icons.location_on),
+                        // selected: true,
+                        onTap: () {},
+                      ),
+                      // Divider(),
+                      ListTile(
+                        title: Text(
+                          'Sell Ticket',
+                          style: TextStyle(
+                              fontSize: 16),
+                        ),
+                        leading:
+                            Icon(Icons.label),
+                        // selected: true,
+                        onTap: () {},
+                      ),
+                      // Divider(),
+                      ListTile(
+                        title: Text(
+                          'Account',
+                          style: TextStyle(
+                              fontSize: 16),
+                        ),
+                        leading: Icon(Icons
+                            .account_circle_outlined),
+                        // selected: true,
+                        onTap: () {},
+                      ),
+                      // Divider(),
+                      ListTile(
+                        title: Text(
+                          'Trips',
+                          style: TextStyle(
+                              fontSize: 16),
+                        ),
+                        leading:
+                            Icon(Icons.add_road),
+                        // selected: true,
+                        onTap: () {},
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Text(
+                'Traveler App for Android\nV1.0.0 universal',
+                textAlign: TextAlign.center,
+              )
+            ],
+          )
         ],
       ),
     );
