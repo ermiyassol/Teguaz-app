@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:teguaz_app/providers/companies.dart';
 import 'package:teguaz_app/providers/setting.dart';
 import 'package:teguaz_app/providers/trip.dart';
 import 'package:teguaz_app/screens/trip_detail_screen.dart';
 
 class TripList extends StatelessWidget {
-  const TripList({Key key}) : super(key: key);
+  // const TripList({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final trip = Provider.of<Trip>(context);
+    final companyLogo =
+        Provider.of<Companies>(context)
+            .getCompany(trip.companyId, 'logo');
     final languageIndex =
         Provider.of<Setting>(context)
             .languageIndex;
@@ -22,9 +26,10 @@ class TripList extends StatelessWidget {
               arguments: trip.tripId);
         },
         leading: CircleAvatar(
-          backgroundColor:
-              Theme.of(context).primaryColor,
-          child: Text('L'),
+          // maxRadius: 50,
+          backgroundImage: NetworkImage(
+            companyLogo,
+          ),
         ),
         title: Text(
             '${trip.startingCity[languageIndex]} - ${trip.destinationCity[languageIndex]}'),

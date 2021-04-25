@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:teguaz_app/providers/companies.dart';
 import 'package:teguaz_app/providers/trips.dart';
 import 'package:teguaz_app/widgets/trip_list.dart';
 
@@ -18,14 +19,23 @@ class _TripListScreenState
   @override
   void initState() {
     super.initState();
-    setState(() {
-      isLoading = true;
-    });
-    Provider.of<Trips>(context, listen: false)
-        .fetchAndSetTrips()
-        .then((_) => setState(() {
-              isLoading = false;
-            }));
+
+    final tripProvider = Provider.of<Trips>(
+        context,
+        listen: false);
+    if (!tripProvider.isTripLoaded()) {
+      setState(() {
+        isLoading = true;
+      });
+      tripProvider
+          .fetchAndSetTrips()
+          .then((_) => setState(() {
+                isLoading = false;
+              }));
+      Provider.of<Companies>(context,
+              listen: false)
+          .fetchAndSetCompany();
+    }
   }
 
   @override

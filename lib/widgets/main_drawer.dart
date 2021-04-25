@@ -1,8 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:teguaz_app/screens/company_screen.dart';
+import 'package:teguaz_app/screens/main_screen.dart';
+import 'package:teguaz_app/widgets/change_setting.dart';
+
+enum drawerList {
+  destination,
+  company,
+  trip,
+  account,
+  sellTicket
+}
 
 class MainDrawer extends StatelessWidget {
-  const MainDrawer({Key key}) : super(key: key);
-
+  // const MainDrawer({Key key}) : super(key: key);
+  var selectedListVal = drawerList.trip;
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -55,7 +66,12 @@ class MainDrawer extends StatelessWidget {
                         color: Colors.white,
                         icon:
                             Icon(Icons.settings),
-                        onPressed: () {}),
+                        onPressed: () {
+                          Navigator.of(context)
+                              .pushNamed(
+                                  ChangeSetting
+                                      .routeName);
+                        }),
                     IconButton(
                         color: Colors.white,
                         icon: Icon(
@@ -84,14 +100,23 @@ class MainDrawer extends StatelessWidget {
                     children: [
                       ListTile(
                         title: Text(
-                          'Company',
+                          'Trips',
                           style: TextStyle(
                               fontSize: 16),
                         ),
                         leading:
                             Icon(Icons.add_road),
-                        selected: true,
-                        onTap: () {},
+                        // selected:
+                        //     selectedListVal ==
+                        //         drawerList.trip,
+                        onTap: () {
+                          selectedListVal =
+                              drawerList.trip;
+                          Navigator.of(context)
+                              .pushReplacementNamed(
+                                  MainScreen
+                                      .routeName);
+                        },
                       ),
                       // Divider(),
                       ListTile(
@@ -102,8 +127,36 @@ class MainDrawer extends StatelessWidget {
                         ),
                         leading: Icon(
                             Icons.location_on),
-                        // selected: true,
-                        onTap: () {},
+                        // selected:
+                        //     selectedListVal ==
+                        //         drawerList
+                        // .destination,
+                        onTap: () {
+                          selectedListVal =
+                              drawerList
+                                  .destination;
+                        },
+                      ),
+                      ListTile(
+                        title: Text(
+                          'Company',
+                          style: TextStyle(
+                              fontSize: 16),
+                        ),
+                        leading:
+                            Icon(Icons.add_road),
+                        // selected:
+                        //     selectedListVal ==
+                        //         drawerList
+                        // .company,
+                        onTap: () {
+                          selectedListVal =
+                              drawerList.company;
+                          Navigator.of(context)
+                              .pushReplacementNamed(
+                                  CompanyScreen
+                                      .routeName);
+                        },
                       ),
                       // Divider(),
                       ListTile(
@@ -114,8 +167,15 @@ class MainDrawer extends StatelessWidget {
                         ),
                         leading:
                             Icon(Icons.label),
-                        // selected: true,
-                        onTap: () {},
+                        // selected:
+                        //     selectedListVal ==
+                        //         drawerList
+                        // .sellTicket,
+                        onTap: () {
+                          selectedListVal =
+                              drawerList
+                                  .sellTicket;
+                        },
                       ),
                       // Divider(),
                       ListTile(
@@ -126,21 +186,16 @@ class MainDrawer extends StatelessWidget {
                         ),
                         leading: Icon(Icons
                             .account_circle_outlined),
-                        // selected: true,
-                        onTap: () {},
+                        // selected:
+                        //     selectedListVal ==
+                        //         drawerList
+                        // .account,
+                        onTap: () {
+                          selectedListVal =
+                              drawerList.account;
+                        },
                       ),
                       // Divider(),
-                      ListTile(
-                        title: Text(
-                          'Trips',
-                          style: TextStyle(
-                              fontSize: 16),
-                        ),
-                        leading:
-                            Icon(Icons.add_road),
-                        // selected: true,
-                        onTap: () {},
-                      ),
                     ],
                   ),
                 ),

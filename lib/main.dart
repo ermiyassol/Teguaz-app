@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:teguaz_app/providers/companies.dart';
 import 'package:teguaz_app/providers/setting.dart';
 import 'package:teguaz_app/providers/trips.dart';
+import 'package:teguaz_app/screens/company_screen.dart';
 import 'package:teguaz_app/screens/main_screen.dart';
 import 'package:teguaz_app/screens/search_screen.dart';
 import 'package:teguaz_app/screens/trip_detail_screen.dart';
@@ -22,12 +24,13 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
             create: (_) => Trips()),
         ChangeNotifierProvider(
-            create: (_) => Setting())
+            create: (_) => Setting()),
+        ChangeNotifierProvider(
+            create: (_) => Companies()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Teguaz App',
-        home: MainScreen(),
         theme: ThemeData(
           primaryColor: Colors.deepPurple,
           // textTheme: TextTheme(
@@ -35,7 +38,10 @@ class MyApp extends StatelessWidget {
           //         color: Colors.white,
           //         fontSize: 17))
         ),
+        initialRoute: MainScreen.routeName,
         routes: {
+          MainScreen.routeName: (_) =>
+              MainScreen(),
           SearchScreen.routeName: (_) =>
               SearchScreen(),
           Guide.routeName: (_) => Guide(),
@@ -44,7 +50,9 @@ class MyApp extends StatelessWidget {
           TripDetailScreen.routeName: (_) =>
               TripDetailScreen(),
           ChangeSetting.routeName: (_) =>
-              ChangeSetting()
+              ChangeSetting(),
+          CompanyScreen.routeName: (_) =>
+              CompanyScreen()
         },
       ),
     );
