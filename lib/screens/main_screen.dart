@@ -9,7 +9,7 @@ class MainScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MainAppBar(),
+      appBar: MainAppBar('Teguaz App'),
       drawer: MainDrawer(),
       body: TripListScreen(),
     );

@@ -8,6 +8,7 @@ class Company with ChangeNotifier {
   final String logoUrl;
   final List<Place> place;
   final String website;
+  final String phoneNumber;
 
   Company(
       {@required this.companyId,
@@ -15,5 +16,6 @@ class Company with ChangeNotifier {
       @required this.headOffice,
       @required this.logoUrl,
       @required this.place,
-      @required this.website});
+      @required this.website,
+      @required this.phoneNumber});
 }

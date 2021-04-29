@@ -35,7 +35,10 @@ class Companies with ChangeNotifier {
           headOffice: companyData['headOffice'],
           logoUrl: companyData['logoUrl'],
           place: [],
-          website: companyData['website']);
+          website: companyData['website'],
+          phoneNumber:
+              companyData['phoneNumber']);
+
       (companyData['place']
               as Map<String, dynamic>)
           .forEach((placeId, placeData) {
@@ -74,8 +77,8 @@ class Companies with ChangeNotifier {
     }
   }
 
-  // Trip finadById(String id) {
-  //   return _Trips.firstWhere(
-  //       (trip) => trip.tripId == id);
-  // }
+  Company finadById(String id) {
+    return _Companies.firstWhere(
+        (company) => company.companyId == id);
+  }
 }

@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:teguaz_app/providers/companies.dart';
 import 'package:teguaz_app/providers/setting.dart';
 import 'package:teguaz_app/providers/trips.dart';
+import 'package:teguaz_app/screens/company_detail_screen.dart';
 import 'package:teguaz_app/screens/company_screen.dart';
 import 'package:teguaz_app/screens/main_screen.dart';
 import 'package:teguaz_app/screens/search_screen.dart';
@@ -32,12 +33,12 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Teguaz App',
         theme: ThemeData(
-          primaryColor: Colors.deepPurple,
-          // textTheme: TextTheme(
-          //     display1: TextStyle(
-          //         color: Colors.white,
-          //         fontSize: 17))
-        ),
+            primaryColor: Colors.deepPurple,
+            textTheme: TextTheme(
+                display4: TextStyle(
+                    fontSize: 17,
+                    fontWeight:
+                        FontWeight.w500))),
         initialRoute: MainScreen.routeName,
         routes: {
           MainScreen.routeName: (_) =>
@@ -52,7 +53,9 @@ class MyApp extends StatelessWidget {
           ChangeSetting.routeName: (_) =>
               ChangeSetting(),
           CompanyScreen.routeName: (_) =>
-              CompanyScreen()
+              CompanyScreen(),
+          CompanyDetailScreen.routeName: (_) =>
+              CompanyDetailScreen()
         },
       ),
     );

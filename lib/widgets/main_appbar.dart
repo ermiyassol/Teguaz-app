@@ -15,6 +15,8 @@ enum filterValues {
 
 class MainAppBar extends StatelessWidget
     with PreferredSizeWidget {
+  final String title;
+  MainAppBar(this.title);
   // const MainAppBar({Key key}) : super(key: key);
 
   @override
@@ -25,7 +27,7 @@ class MainAppBar extends StatelessWidget
   Widget build(BuildContext context) {
     return AppBar(
       title: Text(
-        'Teguaz App',
+        title,
       ),
       actions: [
         IconButton(
