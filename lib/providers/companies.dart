@@ -104,6 +104,11 @@ class Companies with ChangeNotifier {
       return company.logoUrl;
     } else if (type == 'name') {
       return company.companyName;
+    } else if (type == 'both') {
+      return {
+        'name': company.companyName,
+        'logo': company.logoUrl,
+      };
     } else {
       return company;
     }

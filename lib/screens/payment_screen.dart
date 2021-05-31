@@ -92,14 +92,13 @@ class _PaymentScreenState
         .getPassengerAccount(
             int.parse(pinController.text))
         .then((response) {
-      print(response);
       if (response == 'SUCCESS') {
         final tripPrice = Provider.of<Companies>(
                 context,
                 listen: false)
             .fetchDestinationPlace(
                 companyId, place);
-        print(tripPrice);
+
         final enoughMoney = Provider.of<Payment>(
                 context,
                 listen: false)

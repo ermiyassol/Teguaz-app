@@ -13,6 +13,7 @@ import 'package:teguaz_app/screens/main_screen.dart';
 import 'package:teguaz_app/screens/payment_screen.dart';
 import 'package:teguaz_app/screens/register_passenger_screen.dart';
 import 'package:teguaz_app/screens/search_screen.dart';
+import 'package:teguaz_app/screens/ticket_screen.dart';
 // import 'package:teguaz_app/screens/test.screen.dart';
 import 'package:teguaz_app/screens/trip_detail_screen.dart';
 import 'package:teguaz_app/widgets/about.dart';
@@ -78,6 +79,8 @@ class MyApp extends StatelessWidget {
               RegisterPassenger(),
           PaymentScreen.routeName: (_) =>
               PaymentScreen(),
+          TicketScreen.routeName: (_) =>
+              TicketScreen()
 
           // TestScreen.routeName: (_) =>
           //     TestScreen()

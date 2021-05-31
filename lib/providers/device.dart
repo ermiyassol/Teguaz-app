@@ -8,9 +8,10 @@ class Device with ChangeNotifier {
     return deviceId;
   }
 
-  Future<void> getImei() async {
+  Future<String> getImei() async {
     deviceId = await ImeiPlugin.getImei(
         shouldShowRequestPermissionRationale:
             false);
+    return deviceId;
   }
 }

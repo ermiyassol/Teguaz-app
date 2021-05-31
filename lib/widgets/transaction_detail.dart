@@ -109,13 +109,7 @@ class _TransactionDetailState
                           Provider.of<SeatReservation>(
                                   context,
                                   listen: false)
-                              .buyTicket()
-                              .then((value) {
-                            setState(() {
-                              performingTransaction =
-                                  false;
-                            });
-                          });
+                              .buyTicket();
                           Finish(context);
                         });
                       } else {

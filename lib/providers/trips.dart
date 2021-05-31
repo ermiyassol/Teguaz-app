@@ -12,6 +12,8 @@ import 'package:teguaz_app/providers/trip.dart';
 
 class Trips with ChangeNotifier {
   List<Trip> _Trips = [];
+  List<Map<String, dynamic>>
+      _UpcommingPassengerTrips = [];
 
   Map<String, dynamic> tripDetail(String tripId) {
     final Trip trip = _Trips.where(
@@ -36,10 +38,17 @@ class Trips with ChangeNotifier {
     return [..._Trips];
   }
 
-  Future<void> fetchAndSetTrips() async {
-    // CustomData({app});
-    // final FirebaseApp app;
+  List<Map<String, dynamic>>
+      get upComingTripsList {
+    return [..._UpcommingPassengerTrips];
+  }
 
+  int get UpcomingTrip {
+    return _UpcommingPassengerTrips.length;
+  }
+
+  Future<void> fetchAndSetTrips(
+      String deviceId) async {
     final referenceDatabase =
         FirebaseDatabase.instance;
     final ref = referenceDatabase.reference();
@@ -48,6 +57,7 @@ class Trips with ChangeNotifier {
         .onValue
         .listen((event) {
       List<Trip> loadedData = [];
+      _UpcommingPassengerTrips = [];
       event.snapshot.value
           .forEach((tripId, tripData) {
         Trip newTrip = Trip(
@@ -81,7 +91,7 @@ class Trips with ChangeNotifier {
         if (tripData['passengers'] != null) {
           tripData['passengers'].forEach(
               (passengerId, passengerData) {
-            final newBus = Passenger(
+            final newPassenger = Passenger(
               fullName: passengerData['fullName'],
               deviceId: passengerData['deviceId'],
               phoneNo: passengerData['phoneNo'],
@@ -92,7 +102,33 @@ class Trips with ChangeNotifier {
               time: passengerData['time'],
               status: passengerData['status'],
             );
-            passengers.add(newBus);
+            passengers.add(newPassenger);
+            //! making device
+            if (newPassenger.deviceId ==
+                deviceId) {
+              _UpcommingPassengerTrips.add({
+                'passengerId': passengerId,
+                'tripId': tripId,
+                'deviceId': newPassenger.deviceId,
+                'companyId': newTrip.companyId,
+                'fullName': newPassenger.fullName,
+                'phoneNo': newPassenger.phoneNo,
+                'seatNo': newPassenger.seatNo,
+                'startingPlace': newPassenger
+                    .startingPlace
+                    .toString()
+                    .split(' / ')
+                    .toList(),
+                'status': newPassenger.status,
+                'busNo': newTrip.busNo,
+                'date': newTrip.date,
+                'destinationCity':
+                    newTrip.destinationCity,
+                'startingCity':
+                    newTrip.startingCity,
+                'time': newTrip.time,
+              });
+            }
           });
         }
         // passengers.sort((a, b) =>

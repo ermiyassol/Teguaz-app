@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:teguaz_app/providers/trips.dart';
 import 'package:teguaz_app/screens/company_screen.dart';
 import 'package:teguaz_app/screens/main_screen.dart';
+import 'package:teguaz_app/screens/ticket_screen.dart';
 import 'package:teguaz_app/widgets/change_setting.dart';
 
 enum drawerList {
@@ -16,6 +19,10 @@ class MainDrawer extends StatelessWidget {
   var selectedListVal = drawerList.trip;
   @override
   Widget build(BuildContext context) {
+    final upComingTrip =
+        Provider.of<Trips>(context).UpcomingTrip;
+    print('number of up comming trips');
+    print(upComingTrip);
     return Drawer(
       child: Column(
         children: [
@@ -119,32 +126,32 @@ class MainDrawer extends StatelessWidget {
                         },
                       ),
                       // Divider(),
-                      ListTile(
-                        title: Text(
-                          'Destination',
-                          style: TextStyle(
-                              fontSize: 16),
-                        ),
-                        leading: Icon(
-                            Icons.location_on),
-                        // selected:
-                        //     selectedListVal ==
-                        //         drawerList
-                        // .destination,
-                        onTap: () {
-                          selectedListVal =
-                              drawerList
-                                  .destination;
-                        },
-                      ),
+                      // ListTile(
+                      //   title: Text(
+                      //     'Destination',
+                      //     style: TextStyle(
+                      //         fontSize: 16),
+                      //   ),
+                      //   leading: Icon(
+                      //       Icons.location_on),
+                      //   // selected:
+                      //   //     selectedListVal ==
+                      //   //         drawerList
+                      //   // .destination,
+                      //   onTap: () {
+                      //     selectedListVal =
+                      //         drawerList
+                      //             .destination;
+                      //   },
+                      // ),
                       ListTile(
                         title: Text(
                           'Company',
                           style: TextStyle(
                               fontSize: 16),
                         ),
-                        leading:
-                            Icon(Icons.add_road),
+                        leading: Icon(Icons
+                            .workspaces_filled),
                         // selected:
                         //     selectedListVal ==
                         //         drawerList
@@ -159,42 +166,51 @@ class MainDrawer extends StatelessWidget {
                         },
                       ),
                       // Divider(),
-                      ListTile(
-                        title: Text(
-                          'Sell Ticket',
-                          style: TextStyle(
-                              fontSize: 16),
+                      if (upComingTrip > 0)
+                        ListTile(
+                          title: Text(
+                            'Ticket',
+                            style: TextStyle(
+                                fontSize: 16),
+                          ),
+                          leading:
+                              Icon(Icons.label),
+                          trailing: Chip(
+                            label: Text(
+                                '${upComingTrip}'),
+                          ),
+                          // selected:
+                          //     selectedListVal ==
+                          //         drawerList
+                          // .sellTicket,
+                          onTap: () {
+                            selectedListVal =
+                                drawerList
+                                    .sellTicket;
+                            Navigator.of(context)
+                                .pushReplacementNamed(
+                                    TicketScreen
+                                        .routeName);
+                          },
                         ),
-                        leading:
-                            Icon(Icons.label),
-                        // selected:
-                        //     selectedListVal ==
-                        //         drawerList
-                        // .sellTicket,
-                        onTap: () {
-                          selectedListVal =
-                              drawerList
-                                  .sellTicket;
-                        },
-                      ),
                       // Divider(),
-                      ListTile(
-                        title: Text(
-                          'Account',
-                          style: TextStyle(
-                              fontSize: 16),
-                        ),
-                        leading: Icon(Icons
-                            .account_circle_outlined),
-                        // selected:
-                        //     selectedListVal ==
-                        //         drawerList
-                        // .account,
-                        onTap: () {
-                          selectedListVal =
-                              drawerList.account;
-                        },
-                      ),
+                      // ListTile(
+                      //   title: Text(
+                      //     'Account',
+                      //     style: TextStyle(
+                      //         fontSize: 16),
+                      //   ),
+                      //   leading: Icon(Icons
+                      //       .account_circle_outlined),
+                      //   // selected:
+                      //   //     selectedListVal ==
+                      //   //         drawerList
+                      //   // .account,
+                      //   onTap: () {
+                      //     selectedListVal =
+                      //         drawerList.account;
+                      //   },
+                      // ),
                       // Divider(),
                     ],
                   ),

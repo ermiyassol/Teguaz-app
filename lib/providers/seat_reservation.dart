@@ -17,6 +17,30 @@ class SeatReservation with ChangeNotifier {
     };
   }
 
+  setPassenger(
+      String passengerID,
+      String deviceId,
+      String tripId,
+      String fullName,
+      String phoneNumber,
+      int seatNo,
+      String startingPlace) {
+    passengerTripId = tripId;
+    responseId = passengerID;
+    final newPassenger = new Passenger(
+        fullName: fullName,
+        deviceId: deviceId,
+        phoneNo: phoneNumber,
+        seatNo: seatNo,
+        startingPlace: startingPlace,
+        date: DateFormat.yMd()
+            .format(DateTime.now()),
+        time: DateFormat.jm()
+            .format(DateTime.now()),
+        status: 'reserved');
+    _Passenger = newPassenger;
+  }
+
   reserveSeat(
       String deviceId,
       String tripId,
@@ -24,7 +48,6 @@ class SeatReservation with ChangeNotifier {
       String phoneNumber,
       int seatNo,
       String startingPlace) async {
-    passengerTripId = tripId;
     final newPassenger = new Passenger(
         fullName: fullName,
         deviceId: deviceId,
@@ -87,6 +110,8 @@ class SeatReservation with ChangeNotifier {
             'time': _Passenger.time,
             'status': 'sold'
           }));
+      passengerTripId = null;
+      responseId = null;
     } catch (error) {
       print(error);
     }

@@ -17,30 +17,37 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  var isLoading = false;
+  var isLoading = true;
   @override
   void initState() {
     super.initState();
     Provider.of<Device>(context, listen: false)
-        .getImei();
-    Provider.of<Companies>(context, listen: false)
-        .fetchAndSetCompany();
-    final tripProvider = Provider.of<Trips>(
-        context,
-        listen: false);
-    if (!tripProvider.isTripLoaded()) {
-      setState(() {
-        isLoading = true;
+        .getImei()
+        .then((imei) {
+      Provider.of<Companies>(context,
+              listen: false)
+          .fetchAndSetCompany()
+          .then((_) {
+        Provider.of<Trips>(context, listen: false)
+            .fetchAndSetTrips(imei)
+            .then((_) => setState(() {
+                  isLoading = false;
+                }));
       });
-      tripProvider
-          .fetchAndSetTrips()
-          .then((_) => setState(() {
-                isLoading = false;
-              }));
-    }
-
-    // Provider.of<Payment>(context, listen: false)
-    //     .CompanyAccountFetch();
+      // final tripProvider = Provider.of<Trips>(
+      //     context,
+      //     listen: false);
+      // if (!tripProvider.isTripLoaded()) {
+      //   setState(() {
+      //     isLoading = true;
+      //   });
+      //   tripProvider
+      //       .fetchAndSetTrips()
+      //       .then((_) => setState(() {
+      //             isLoading = false;
+      //           }));
+      // }
+    });
   }
 
   @override
