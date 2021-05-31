@@ -1,10 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:teguaz_app/providers/trips.dart';
+import 'package:teguaz_app/screens/company_screen.dart';
+import 'package:teguaz_app/screens/main_screen.dart';
+import 'package:teguaz_app/screens/ticket_screen.dart';
+import 'package:teguaz_app/widgets/change_setting.dart';
+
+enum drawerList {
+  destination,
+  company,
+  trip,
+  account,
+  sellTicket
+}
 
 class MainDrawer extends StatelessWidget {
-  const MainDrawer({Key key}) : super(key: key);
-
+  // const MainDrawer({Key key}) : super(key: key);
+  var selectedListVal = drawerList.trip;
   @override
   Widget build(BuildContext context) {
+    final upComingTrip =
+        Provider.of<Trips>(context).UpcomingTrip;
+    print('number of up comming trips');
+    print(upComingTrip);
     return Drawer(
       child: Column(
         children: [
@@ -55,7 +73,12 @@ class MainDrawer extends StatelessWidget {
                         color: Colors.white,
                         icon:
                             Icon(Icons.settings),
-                        onPressed: () {}),
+                        onPressed: () {
+                          Navigator.of(context)
+                              .pushNamed(
+                                  ChangeSetting
+                                      .routeName);
+                        }),
                     IconButton(
                         color: Colors.white,
                         icon: Icon(
@@ -84,63 +107,111 @@ class MainDrawer extends StatelessWidget {
                     children: [
                       ListTile(
                         title: Text(
-                          'Company',
-                          style: TextStyle(
-                              fontSize: 16),
-                        ),
-                        leading:
-                            Icon(Icons.add_road),
-                        selected: true,
-                        onTap: () {},
-                      ),
-                      // Divider(),
-                      ListTile(
-                        title: Text(
-                          'Destination',
-                          style: TextStyle(
-                              fontSize: 16),
-                        ),
-                        leading: Icon(
-                            Icons.location_on),
-                        // selected: true,
-                        onTap: () {},
-                      ),
-                      // Divider(),
-                      ListTile(
-                        title: Text(
-                          'Sell Ticket',
-                          style: TextStyle(
-                              fontSize: 16),
-                        ),
-                        leading:
-                            Icon(Icons.label),
-                        // selected: true,
-                        onTap: () {},
-                      ),
-                      // Divider(),
-                      ListTile(
-                        title: Text(
-                          'Account',
-                          style: TextStyle(
-                              fontSize: 16),
-                        ),
-                        leading: Icon(Icons
-                            .account_circle_outlined),
-                        // selected: true,
-                        onTap: () {},
-                      ),
-                      // Divider(),
-                      ListTile(
-                        title: Text(
                           'Trips',
                           style: TextStyle(
                               fontSize: 16),
                         ),
                         leading:
                             Icon(Icons.add_road),
-                        // selected: true,
-                        onTap: () {},
+                        // selected:
+                        //     selectedListVal ==
+                        //         drawerList.trip,
+                        onTap: () {
+                          selectedListVal =
+                              drawerList.trip;
+                          Navigator.of(context)
+                              .pushReplacementNamed(
+                                  MainScreen
+                                      .routeName);
+                        },
                       ),
+                      // Divider(),
+                      // ListTile(
+                      //   title: Text(
+                      //     'Destination',
+                      //     style: TextStyle(
+                      //         fontSize: 16),
+                      //   ),
+                      //   leading: Icon(
+                      //       Icons.location_on),
+                      //   // selected:
+                      //   //     selectedListVal ==
+                      //   //         drawerList
+                      //   // .destination,
+                      //   onTap: () {
+                      //     selectedListVal =
+                      //         drawerList
+                      //             .destination;
+                      //   },
+                      // ),
+                      ListTile(
+                        title: Text(
+                          'Company',
+                          style: TextStyle(
+                              fontSize: 16),
+                        ),
+                        leading: Icon(Icons
+                            .workspaces_filled),
+                        // selected:
+                        //     selectedListVal ==
+                        //         drawerList
+                        // .company,
+                        onTap: () {
+                          selectedListVal =
+                              drawerList.company;
+                          Navigator.of(context)
+                              .pushReplacementNamed(
+                                  CompanyScreen
+                                      .routeName);
+                        },
+                      ),
+                      // Divider(),
+                      if (upComingTrip > 0)
+                        ListTile(
+                          title: Text(
+                            'Ticket',
+                            style: TextStyle(
+                                fontSize: 16),
+                          ),
+                          leading:
+                              Icon(Icons.label),
+                          trailing: Chip(
+                            label: Text(
+                                '${upComingTrip}'),
+                          ),
+                          // selected:
+                          //     selectedListVal ==
+                          //         drawerList
+                          // .sellTicket,
+                          onTap: () {
+                            selectedListVal =
+                                drawerList
+                                    .sellTicket;
+                            Navigator.of(context)
+                                .pushReplacementNamed(
+                                    TicketScreen
+                                        .routeName);
+                          },
+                        ),
+                      // Divider(),
+                      // ListTile(
+                      //   title: Text(
+                      //     'Account',
+                      //     style: TextStyle(
+                      //         fontSize: 16),
+                      //   ),
+                      //   leading: Icon(Icons
+                      //       .account_circle_outlined),
+                      //   // selected:
+                      //   //     selectedListVal ==
+                      //   //         drawerList
+                      //   // .account,
+                      //   onTap: () {
+                      //     selectedListVal =
+                      //         drawerList.account;
+                      //   },
+                      // ),
+                      // Divider(),
                     ],
                   ),
                 ),

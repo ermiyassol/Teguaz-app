@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:teguaz_app/screens/login_screen.dart';
+import 'package:provider/provider.dart';
+import 'package:teguaz_app/providers/device.dart';
+import 'package:teguaz_app/providers/payment.dart';
+import 'package:teguaz_app/providers/trips.dart';
+// import 'package:teguaz_app/screens/login_screen.dart';
 import 'package:teguaz_app/screens/search_screen.dart';
+// import 'package:teguaz_app/screens/test.screen.dart';
 import 'package:teguaz_app/widgets/about.dart';
 import 'package:teguaz_app/widgets/change_setting.dart';
 import 'package:teguaz_app/widgets/contact.dart';
@@ -15,6 +20,8 @@ enum filterValues {
 
 class MainAppBar extends StatelessWidget
     with PreferredSizeWidget {
+  final String title;
+  MainAppBar(this.title);
   // const MainAppBar({Key key}) : super(key: key);
 
   @override
@@ -25,7 +32,7 @@ class MainAppBar extends StatelessWidget
   Widget build(BuildContext context) {
     return AppBar(
       title: Text(
-        'Teguaz App',
+        title,
       ),
       actions: [
         IconButton(
@@ -76,24 +83,7 @@ class MainAppBar extends StatelessWidget
         ),
         IconButton(
             icon: Icon(Icons.login),
-            onPressed: () {
-              // show
-              //
-              showDialog(
-                  context: context,
-                  builder: (ctx) => AlertDialog(
-                        title: Text(
-                          'Login Form',
-                          style: TextStyle(
-                              color: Theme.of(
-                                      context)
-                                  .primaryColor),
-                          textAlign:
-                              TextAlign.center,
-                        ),
-                        content: LoginScreen(),
-                      ));
-            })
+            onPressed: () {})
       ],
     );
   }
