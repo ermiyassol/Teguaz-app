@@ -11,6 +11,7 @@ class TripList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final trip = Provider.of<Trip>(context);
+
     final companyLogo =
         Provider.of<Companies>(context)
             .getCompany(trip.companyId, 'logo');

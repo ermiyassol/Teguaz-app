@@ -1,17 +1,21 @@
 import 'package:flutter/material.dart';
 
 class Passenger {
-  final String passengerId;
-  final phoneNo;
-  final bool status;
-  final int seatNo;
-  final String paymentType;
-  final String paymentCode;
+  String deviceId;
+  String phoneNo;
+  String status;
+  int seatNo;
+  String fullName;
+  String startingPlace;
+  String date;
+  String time;
 
   Passenger(
-      {this.passengerId,
-      this.paymentCode,
-      this.paymentType,
+      {this.date,
+      this.deviceId,
+      this.fullName,
+      this.startingPlace,
+      this.time,
       this.phoneNo,
       this.seatNo,
       this.status});

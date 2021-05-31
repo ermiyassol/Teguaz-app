@@ -156,7 +156,9 @@ class _CompanyDetailScreenState
               if (viewTrip)
                 Container(
                     height: 200,
-                    child: TripListScreen())
+                    child: TripListScreen(
+                      companyId: companyId,
+                    ))
             ],
           ),
         ),

@@ -1,2 +1,7 @@
 
-- make the trip list asynchronously fetch trips from the database when some change occurs
+- make trips displayed in the company with only with it's company
+
+
+payment validation probabilities
+1. incorrect pin
+2. not enough money

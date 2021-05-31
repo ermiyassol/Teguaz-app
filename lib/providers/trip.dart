@@ -14,7 +14,7 @@ class Trip with ChangeNotifier {
   final List<String> startingCity;
   final List<dynamic> startingPlace;
   final String time;
-  final List<Passenger> passengers;
+  List<Passenger> passengers;
 
   Trip(
       {@required this.tripId,

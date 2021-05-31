@@ -10,10 +10,8 @@ class CompanyScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final companies = Provider.of<Companies>(
-            context,
-            listen: false)
-        .companies;
+    final companies =
+        Provider.of<Companies>(context).companies;
     return Scaffold(
         appBar: MainAppBar('Companies List'),
         drawer: MainDrawer(),

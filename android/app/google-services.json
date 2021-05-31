@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "252301881886",
+    "firebase_url": "https://teguaz-web-app-default-rtdb.firebaseio.com",
+    "project_id": "teguaz-web-app",
+    "storage_bucket": "teguaz-web-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:252301881886:android:a3121def27e3178af1340f",
+        "android_client_info": {
+          "package_name": "com.example.teguaz_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "252301881886-tq4pt2jkv4f8o4cvqj05upipqed0q39g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD2VLkSXxEobQjtdA6MhCbjCoG8iD6Bq6E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "252301881886-tq4pt2jkv4f8o4cvqj05upipqed0q39g.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

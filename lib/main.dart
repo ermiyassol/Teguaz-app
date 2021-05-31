@@ -1,19 +1,31 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:teguaz_app/providers/companies.dart';
+import 'package:teguaz_app/providers/payment.dart';
+import 'package:teguaz_app/providers/seat_reservation.dart';
 import 'package:teguaz_app/providers/setting.dart';
+import 'package:teguaz_app/providers/device.dart';
 import 'package:teguaz_app/providers/trips.dart';
 import 'package:teguaz_app/screens/company_detail_screen.dart';
 import 'package:teguaz_app/screens/company_screen.dart';
 import 'package:teguaz_app/screens/main_screen.dart';
+import 'package:teguaz_app/screens/payment_screen.dart';
+import 'package:teguaz_app/screens/register_passenger_screen.dart';
 import 'package:teguaz_app/screens/search_screen.dart';
+// import 'package:teguaz_app/screens/test.screen.dart';
 import 'package:teguaz_app/screens/trip_detail_screen.dart';
 import 'package:teguaz_app/widgets/about.dart';
 import 'package:teguaz_app/widgets/change_setting.dart';
 import 'package:teguaz_app/widgets/contact.dart';
 import 'package:teguaz_app/widgets/guide.dart';
+import 'package:teguaz_app/widgets/transaction_detail.dart';
 
-void main() => runApp(MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   const MyApp({Key key}) : super(key: key);
@@ -28,6 +40,12 @@ class MyApp extends StatelessWidget {
             create: (_) => Setting()),
         ChangeNotifierProvider(
             create: (_) => Companies()),
+        ChangeNotifierProvider(
+            create: (_) => Device()),
+        ChangeNotifierProvider(
+            create: (_) => SeatReservation()),
+        ChangeNotifierProvider(
+            create: (_) => Payment()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -55,7 +73,16 @@ class MyApp extends StatelessWidget {
           CompanyScreen.routeName: (_) =>
               CompanyScreen(),
           CompanyDetailScreen.routeName: (_) =>
-              CompanyDetailScreen()
+              CompanyDetailScreen(),
+          RegisterPassenger.routeName: (_) =>
+              RegisterPassenger(),
+          PaymentScreen.routeName: (_) =>
+              PaymentScreen(),
+
+          // TestScreen.routeName: (_) =>
+          //     TestScreen()
+          // TransactionDetail.routeName: (_) =>
+          //     TransactionDetail()
         },
       ),
     );

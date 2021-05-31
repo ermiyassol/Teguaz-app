@@ -3,18 +3,53 @@ import 'package:provider/provider.dart';
 import 'package:teguaz_app/providers/companies.dart';
 import 'package:teguaz_app/providers/setting.dart';
 import 'package:teguaz_app/providers/trips.dart';
+import 'package:teguaz_app/screens/register_passenger_screen.dart';
 
 class TripDetailScreen extends StatelessWidget {
   static const routeName = '/trip-detail';
+  static const colors = [
+    Colors.green,
+    Colors.grey,
+    Colors.red
+  ];
+  String tripId;
+  final _scaffold = GlobalKey<ScaffoldState>();
 
-  Widget seatWidgetBuilder(int index) {
+  final snackBar = SnackBar(
+    behavior: SnackBarBehavior.floating,
+    content: Text(
+      'Selected Seat Is Reserved!! Try Green Colored Seats.',
+      textAlign: TextAlign.center,
+    ),
+  );
+
+  // Find the Scaffold in the widget tree and use
+  // it to show a SnackBar.
+
+  Widget seatWidgetBuilder(
+      int index, BuildContext context) {
+    final statusIndex =
+        Provider.of<Trips>(context, listen: false)
+            .checkSeatNo(index + 1, tripId);
     return InkWell(
-        onTap: () {},
+        onTap: () {
+          _scaffold.currentState
+              .hideCurrentSnackBar();
+          statusIndex == 0
+              ? Navigator.of(context).pushNamed(
+                  RegisterPassenger.routeName,
+                  arguments: {
+                      'tripId': tripId,
+                      'seatNo': index + 1
+                    })
+              : _scaffold.currentState
+                  .showSnackBar(snackBar);
+        },
         child: Container(
           width: 35,
           height: 25,
           margin: EdgeInsets.all(8),
-          color: Colors.grey,
+          color: colors[statusIndex],
           child: Center(
             child: Text(
               (index + 1).toString(),
@@ -51,7 +86,10 @@ class TripDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final tripId = ModalRoute.of(context)
+    final companiesProvider =
+        Provider.of<Companies>(context,
+            listen: false);
+    tripId = ModalRoute.of(context)
         .settings
         .arguments as String;
     final trip =
@@ -61,9 +99,10 @@ class TripDetailScreen extends StatelessWidget {
             context,
             listen: false)
         .languageIndex;
-    final companyName =
-        Provider.of<Companies>(context)
-            .getCompany(trip.companyId, 'name');
+    final companyName = companiesProvider
+        .getCompany(trip.companyId, 'name');
+    companiesProvider.seatNo(
+        trip.busNo, trip.companyId);
     final rowIndex =
         (((49 - 5) ~/ 4) + 1).toInt();
     // final startingPlaces =
@@ -78,9 +117,9 @@ class TripDetailScreen extends StatelessWidget {
       startingPlace.add(
           place.toString().split(' / ').toList());
     });
-    print(startingPlace);
 
     return Scaffold(
+      key: _scaffold,
       appBar: AppBar(
         title: Text(companyName),
       ),
@@ -209,31 +248,40 @@ class TripDetailScreen extends StatelessWidget {
                       return Row(
                         children: [
                           seatWidgetBuilder(
-                              (index * 4)),
+                              (index * 4),
+                              context),
                           seatWidgetBuilder(
-                              (index * 4) + 1),
+                              (index * 4) + 1,
+                              context),
                           seatWidgetBuilder(
-                              (index * 4) + 2),
+                              (index * 4) + 2,
+                              context),
                           seatWidgetBuilder(
-                              (index * 4) + 3),
+                              (index * 4) + 3,
+                              context),
                           seatWidgetBuilder(
-                              (index * 4) + 4),
+                              (index * 4) + 4,
+                              context),
                         ],
                       );
                     else
                       return Row(
                         children: [
                           seatWidgetBuilder(
-                              (index * 4)),
+                              (index * 4),
+                              context),
                           seatWidgetBuilder(
-                              (index * 4) + 1),
+                              (index * 4) + 1,
+                              context),
                           SizedBox(
                             width: 50,
                           ),
                           seatWidgetBuilder(
-                              (index * 4) + 2),
+                              (index * 4) + 2,
+                              context),
                           seatWidgetBuilder(
-                              (index * 4) + 3),
+                              (index * 4) + 3,
+                              context),
                         ],
                       );
                   },

@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:teguaz_app/screens/login_screen.dart';
+import 'package:provider/provider.dart';
+import 'package:teguaz_app/providers/device.dart';
+import 'package:teguaz_app/providers/payment.dart';
+import 'package:teguaz_app/providers/trips.dart';
+// import 'package:teguaz_app/screens/login_screen.dart';
 import 'package:teguaz_app/screens/search_screen.dart';
+// import 'package:teguaz_app/screens/test.screen.dart';
 import 'package:teguaz_app/widgets/about.dart';
 import 'package:teguaz_app/widgets/change_setting.dart';
 import 'package:teguaz_app/widgets/contact.dart';
@@ -78,24 +83,7 @@ class MainAppBar extends StatelessWidget
         ),
         IconButton(
             icon: Icon(Icons.login),
-            onPressed: () {
-              // show
-              //
-              showDialog(
-                  context: context,
-                  builder: (ctx) => AlertDialog(
-                        title: Text(
-                          'Login Form',
-                          style: TextStyle(
-                              color: Theme.of(
-                                      context)
-                                  .primaryColor),
-                          textAlign:
-                              TextAlign.center,
-                        ),
-                        content: LoginScreen(),
-                      ));
-            })
+            onPressed: () {})
       ],
     );
   }
