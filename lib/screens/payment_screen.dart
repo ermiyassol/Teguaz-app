@@ -56,6 +56,8 @@ class _PaymentScreenState
 
   Future<dynamic> _showPaymentDialog(
       bool enoughMoney, double price) {
+    print(enoughMoney);
+    print(price);
     return showDialog(
         // useSafeArea: true,
         context: context,

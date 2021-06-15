@@ -36,6 +36,7 @@ class _TransactionDetailState
         Provider.of<SeatReservation>(context,
                 listen: false)
             .passengerDetail;
+    print(passengerDetail['tripId']);
     final tripDetail = Provider.of<Trips>(context,
             listen: false)
         .tripDetail(passengerDetail['tripId']);

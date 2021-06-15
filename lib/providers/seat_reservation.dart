@@ -48,6 +48,7 @@ class SeatReservation with ChangeNotifier {
       String phoneNumber,
       int seatNo,
       String startingPlace) async {
+    passengerTripId = tripId;
     final newPassenger = new Passenger(
         fullName: fullName,
         deviceId: deviceId,
