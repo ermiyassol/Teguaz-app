@@ -6,11 +6,17 @@ import 'package:teguaz_app/widgets/trip_list.dart';
 
 class TripListScreen extends StatelessWidget {
   final String companyId;
-  TripListScreen({this.companyId = ''});
+  final String searchingText;
+  TripListScreen(
+      {this.companyId = '',
+      this.searchingText = ''});
   @override
   Widget build(BuildContext context) {
+    print(searchingText);
     final tripsList = Provider.of<Trips>(context)
-        .trips(companyId: companyId);
+        .trips(
+            companyId: companyId,
+            searchingText: searchingText);
     return Container(
         padding: EdgeInsets.symmetric(
             horizontal: 10, vertical: 10),

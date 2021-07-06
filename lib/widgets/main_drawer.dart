@@ -46,7 +46,7 @@ class MainDrawer extends StatelessWidget {
                     CircleAvatar(
                       radius: 40,
                       backgroundImage: AssetImage(
-                          'assets/images/logo.jpg'),
+                          'assets/images/logo.png'),
                     ),
                     SizedBox(
                       height: 10,

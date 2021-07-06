@@ -81,9 +81,9 @@ class MainAppBar extends StatelessWidget
             )
           ],
         ),
-        IconButton(
-            icon: Icon(Icons.login),
-            onPressed: () {})
+        // IconButton(
+        //     icon: Icon(Icons.login),
+        //     onPressed: () {})
       ],
     );
   }

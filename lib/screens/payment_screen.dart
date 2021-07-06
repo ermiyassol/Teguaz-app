@@ -94,6 +94,7 @@ class _PaymentScreenState
         .getPassengerAccount(
             int.parse(pinController.text))
         .then((response) {
+      print(response);
       if (response == 'SUCCESS') {
         final tripPrice = Provider.of<Companies>(
                 context,
@@ -119,8 +120,8 @@ class _PaymentScreenState
 
   Widget _bankImageBuilder(int index) {
     return Container(
-        width: 100,
-        height: 100,
+        width: 50,
+        height: 50,
         child: ConstrainedBox(
             constraints: BoxConstraints.expand(),
             child: FlatButton(
@@ -138,119 +139,156 @@ class _PaymentScreenState
         .arguments as Map<String, dynamic>;
     final companyId = routeArgs['companyId'];
     final place = routeArgs['place'];
+    final delete = routeArgs['delete'];
 
-    print(routeArgs);
-    return Scaffold(
-        appBar: AppBar(
-          automaticallyImplyLeading: false,
-          leading: Builder(
-            builder: (BuildContext context) {
-              return IconButton(
-                icon:
-                    const Icon(Icons.arrow_back),
+    return new WillPopScope(
+      onWillPop: () {
+        if (delete) {
+          return Provider.of<SeatReservation>(
+                  context,
+                  listen: false)
+              .deletePassenger();
+        } else {
+          return null;
+        }
+      },
+      child: Scaffold(
+          appBar: AppBar(
+            automaticallyImplyLeading: false,
+            leading: Builder(
+              builder: (BuildContext context) {
+                return IconButton(
+                  icon: const Icon(
+                      Icons.arrow_back),
+                  onPressed: () {
+                    if (delete) {
+                      Provider.of<SeatReservation>(
+                              context,
+                              listen: false)
+                          .deletePassenger();
+                    }
+                    Navigator.of(context).pop();
+                  },
+                );
+              },
+            ),
+            title: Text('Payment Selection'),
+            actions: [
+              RaisedButton(
                 onPressed: () {
-                  Provider.of<SeatReservation>(
-                          context,
-                          listen: false)
-                      .deletePassenger();
-                  Navigator.of(context).pop();
+                  Navigator.of(context).popUntil(
+                      (route) => route.isFirst);
                 },
-              );
-            },
+                color: Theme.of(context)
+                    .primaryColor,
+                child: Text(
+                  'Pay Later',
+                  style: TextStyle(
+                      color: Colors.white),
+                ),
+              )
+            ],
           ),
-          title: Text('Payment Selection'),
-        ),
-        body: ListView(
-          children: [
-            if (bankIndex != null)
-              Padding(
-                padding: EdgeInsets.symmetric(
-                    horizontal: 15, vertical: 10),
-                child: Row(
-                  children: [
-                    Flexible(
-                      child: TextField(
-                        controller: pinController,
-                        keyboardType:
-                            TextInputType.number,
-                        obscureText:
-                            passwordVisible
-                                ? false
-                                : true,
-                        cursorColor:
-                            Theme.of(context)
-                                .cursorColor,
-                        onChanged: (value) {
-                          if (_isSubmitted &&
-                              value.isNotEmpty) {
-                            setState(() {
-                              _isSubmitted =
-                                  false;
-                            });
-                          }
-                        },
-                        maxLength: 8,
-                        decoration:
-                            InputDecoration(
-                          errorText: _isSubmitted &&
-                                  pinController
-                                      .text
-                                      .isEmpty
-                              ? 'Please Enter Your Mobile Banking Pin!!'
-                              : null,
-                          icon: Icon(Icons.lock),
-                          labelText:
-                              'Enter Your Pin',
-                          labelStyle: TextStyle(
-                            color:
-                                Color(0xFF6200EE),
-                          ),
-                          helperText:
-                              'Enter Your Selected Bank Mobile Banking Pin',
-                          suffixIcon: IconButton(
-                              icon: Icon(passwordVisible
-                                  ? Icons
-                                      .visibility_off
-                                  : Icons
-                                      .visibility),
-                              onPressed: () {
-                                setState(() {
-                                  passwordVisible =
-                                      !passwordVisible;
-                                });
-                              }),
-                          enabledBorder:
-                              UnderlineInputBorder(
-                            borderSide: BorderSide(
-                                color: Color(
-                                    0xFF6200EE)),
+          body: ListView(
+            children: [
+              if (bankIndex != null)
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                      horizontal: 15,
+                      vertical: 10),
+                  child: Row(
+                    children: [
+                      Flexible(
+                        child: TextField(
+                          controller:
+                              pinController,
+                          keyboardType:
+                              TextInputType
+                                  .number,
+                          obscureText:
+                              passwordVisible
+                                  ? false
+                                  : true,
+                          cursorColor:
+                              Theme.of(context)
+                                  .cursorColor,
+                          onChanged: (value) {
+                            if (_isSubmitted &&
+                                value
+                                    .isNotEmpty) {
+                              setState(() {
+                                _isSubmitted =
+                                    false;
+                              });
+                            }
+                          },
+                          maxLength: 8,
+                          decoration:
+                              InputDecoration(
+                            errorText: _isSubmitted &&
+                                    pinController
+                                        .text
+                                        .isEmpty
+                                ? 'Please Enter Your Mobile Banking Pin!!'
+                                : null,
+                            icon:
+                                Icon(Icons.lock),
+                            labelText:
+                                'Enter Your Pin',
+                            labelStyle: TextStyle(
+                              color: Color(
+                                  0xFF6200EE),
+                            ),
+                            helperText:
+                                'Enter Your Selected Bank Mobile Banking Pin',
+                            suffixIcon:
+                                IconButton(
+                                    icon: Icon(passwordVisible
+                                        ? Icons
+                                            .visibility_off
+                                        : Icons
+                                            .visibility),
+                                    onPressed:
+                                        () {
+                                      setState(
+                                          () {
+                                        passwordVisible =
+                                            !passwordVisible;
+                                      });
+                                    }),
+                            enabledBorder:
+                                UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: Color(
+                                      0xFF6200EE)),
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    IconButton(
-                      onPressed: () {
-                        validatePayment(
-                            companyId, place);
-                      },
-                      splashColor:
-                          Theme.of(context)
+                      IconButton(
+                        onPressed: () {
+                          validatePayment(
+                              companyId, place);
+                        },
+                        splashColor:
+                            Theme.of(context)
+                                .primaryColor,
+                        icon: Icon(
+                          Icons.check,
+                          color: Theme.of(context)
                               .primaryColor,
-                      icon: Icon(
-                        Icons.check,
-                        color: Theme.of(context)
-                            .primaryColor,
-                      ),
-                    )
-                  ],
+                        ),
+                      )
+                    ],
+                  ),
                 ),
-              ),
-            Divider(),
-            _bankImageBuilder(0),
-            _bankImageBuilder(1),
-            _bankImageBuilder(2),
-            _bankImageBuilder(3),
-          ],
-        ));
+              Divider(),
+              _bankImageBuilder(0),
+              _bankImageBuilder(1),
+              _bankImageBuilder(2),
+              _bankImageBuilder(3),
+            ],
+          )),
+    );
   }
 }

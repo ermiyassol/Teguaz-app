@@ -82,16 +82,19 @@ class Payment with ChangeNotifier {
       var url = Uri.parse(
           'https://bank-demo-3dfb4-default-rtdb.firebaseio.com/account.json');
       var response = await http.get(url);
+
       var extractedData =
           json.decode(response.body)
               as Map<dynamic, dynamic>;
 
       extractedData.forEach((key, value) {
         if (value['pin'] == pin) {
+          // print('successs passenger working');
           _passengerAccount = new Account(
               accountNumber:
                   value['accountNumber'],
               fullName: value['fullName'],
+              admin: value['admin'],
               money: value['money'].toInt(),
               phoneNumber: value['phoneNumber'],
               pin: value['pin'],
@@ -100,10 +103,12 @@ class Payment with ChangeNotifier {
         }
 
         if (key == '-MayfGq3oIHLOswkuE-O') {
+          // print('successs company working');
           _companyAccount = new Account(
               accountNumber:
                   value['accountNumber'],
               fullName: value['fullName'],
+              admin: value['admin'],
               money: value['money'].toInt(),
               phoneNumber: value['phoneNumber'],
               pin: value['pin'],

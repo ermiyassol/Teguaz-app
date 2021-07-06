@@ -18,6 +18,16 @@ class TicketScreen extends StatefulWidget {
 
 class _TicketScreenState
     extends State<TicketScreen> {
+  final _scaffold = GlobalKey<ScaffoldState>();
+
+  final snackBar = SnackBar(
+    behavior: SnackBarBehavior.floating,
+    content: Text(
+      'Trip Reservation Canceled Successfully!',
+      // textAlign: TextAlign.center,
+    ),
+  );
+
   final style = TextStyle(
       fontSize: 17, fontWeight: FontWeight.w500);
   int collapseIndex;
@@ -191,6 +201,8 @@ class _TicketScreenState
                                           PaymentScreen
                                               .routeName,
                                           arguments: {
+                                            'delete':
+                                                false,
                                             'companyId':
                                                 upComingTrips[index]['companyId'],
                                             'place': upComingTrips[index]['startingCity'].join(' / ') == "addis ababa / አዲስ አበባ"
@@ -203,6 +215,46 @@ class _TicketScreenState
                                         .primaryColor,
                                     child: Text(
                                       'Pay',
+                                      style: TextStyle(
+                                          color: Colors
+                                              .white),
+                                    ),
+                                  ),
+                                ),
+                              if (upComingTrips[
+                                          index][
+                                      'status'] !=
+                                  'sold')
+                                SizedBox(
+                                  width: double
+                                      .infinity,
+                                  child:
+                                      RaisedButton(
+                                    onPressed:
+                                        () {
+                                      Provider.of<SeatReservation>(
+                                              context,
+                                              listen:
+                                                  false)
+                                          .deletePassengerwithId(
+                                              upComingTrips[index][
+                                                  'tripId'],
+                                              upComingTrips[index][
+                                                  'passengerId'])
+                                          .then(
+                                              (value) {
+                                        _scaffold
+                                            .currentState
+                                            .hideCurrentSnackBar();
+                                        collapseIndex =
+                                            null;
+                                      });
+                                    },
+                                    color: Theme.of(
+                                            context)
+                                        .errorColor,
+                                    child: Text(
+                                      'Cancel Reservation',
                                       style: TextStyle(
                                           color: Colors
                                               .white),

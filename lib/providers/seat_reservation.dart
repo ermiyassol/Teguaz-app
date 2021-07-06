@@ -129,6 +129,15 @@ class SeatReservation with ChangeNotifier {
     }
   }
 
+  Future<void> deletePassengerwithId(
+      String tripId, String passengerId) async {
+    var url = Uri.parse(
+        'https://teguaz-web-app-default-rtdb.firebaseio.com/trip/$tripId/passengers/$passengerId.json');
+    try {
+      await http.delete(url);
+    } catch (error) {}
+  }
+
   paymentPerformed() {
     passengerTripId = null;
     responseId = null;
