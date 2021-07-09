@@ -42,6 +42,7 @@ class _TicketScreenState
             .languageIndex;
 
     return Scaffold(
+        key: _scaffold,
         appBar: MainAppBar('Tickets List'),
         drawer: MainDrawer(),
         body: Container(
@@ -245,7 +246,8 @@ class _TicketScreenState
                                               (value) {
                                         _scaffold
                                             .currentState
-                                            .hideCurrentSnackBar();
+                                            .showSnackBar(
+                                                snackBar);
                                         collapseIndex =
                                             null;
                                       });
