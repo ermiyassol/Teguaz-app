@@ -28,12 +28,30 @@ class Trips with ChangeNotifier {
     };
   }
 
-  List<Trip> trips({String companyId = ''}) {
+  List<Trip> trips(
+      {String companyId = '',
+      String searchingText = ''}) {
     if (companyId != '') {
       return _Trips.where((trip) =>
           trip.companyId == companyId).toList();
     }
-    // todo test the parameters
+    if (searchingText != '') {
+      return _Trips.where((trip) {
+        final condition = trip.startingCity[0]
+                .contains(searchingText) ||
+            trip.startingCity[1]
+                .contains(searchingText) ||
+            trip.date[0]
+                .contains(searchingText) ||
+            trip.date[1]
+                .contains(searchingText) ||
+            trip.destinationCity[0]
+                .contains(searchingText) ||
+            trip.destinationCity[1]
+                .contains(searchingText);
+        return condition;
+      }).toList();
+    }
 
     return [..._Trips];
   }
@@ -45,6 +63,12 @@ class Trips with ChangeNotifier {
 
   int get UpcomingTrip {
     return _UpcommingPassengerTrips.length;
+  }
+
+  bool seatValidation(String tripId, int seatNo) {
+    final trip = finadById(tripId);
+    return trip.passengers.any((passenger) =>
+        passenger.seatNo == seatNo);
   }
 
   Future<void> fetchAndSetTrips(
@@ -94,7 +118,8 @@ class Trips with ChangeNotifier {
             final newPassenger = Passenger(
               fullName: passengerData['fullName'],
               deviceId: passengerData['deviceId'],
-              phoneNo: passengerData['phoneNo'],
+              phoneNo: passengerData['phoneNo']
+                  .toString(),
               seatNo: passengerData['seatNo'],
               startingPlace:
                   passengerData['startingPlace'],

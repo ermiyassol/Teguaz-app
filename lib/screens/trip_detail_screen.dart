@@ -92,9 +92,8 @@ class TripDetailScreen extends StatelessWidget {
     tripId = ModalRoute.of(context)
         .settings
         .arguments as String;
-    final trip =
-        Provider.of<Trips>(context, listen: false)
-            .finadById(tripId);
+    final trip = Provider.of<Trips>(context)
+        .finadById(tripId);
     final languageIndex = Provider.of<Setting>(
             context,
             listen: false)
@@ -238,9 +237,18 @@ class TripDetailScreen extends StatelessWidget {
               cardBuilder(context, 'Seats'),
               Container(
                 width: double.infinity,
-                height: 300,
-                padding: EdgeInsets.symmetric(
-                    vertical: 10, horizontal: 55),
+                height: MediaQuery.of(context)
+                        .size
+                        .height *
+                    0.4,
+                padding: EdgeInsets.only(
+                    top: 10,
+                    bottom: 10,
+                    left: MediaQuery.of(context)
+                            .size
+                            .width *
+                        0.15),
+                alignment: Alignment.center,
                 child: ListView.builder(
                   itemCount: rowIndex,
                   itemBuilder: (_, index) {

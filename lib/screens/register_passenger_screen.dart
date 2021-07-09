@@ -17,11 +17,23 @@ class RegisterPassenger extends StatefulWidget {
 
 class _RegisterPassengerState
     extends State<RegisterPassenger> {
+  var validatorCondition = true;
+  final GlobalKey<ScaffoldState> _scaffold =
+      new GlobalKey<ScaffoldState>();
   final _form = GlobalKey<FormState>();
   int _selectedSPIndex = null;
   var isSubmitted = false;
   String _fullName;
   String _phoneNumber;
+
+  final snackBar = SnackBar(
+    behavior: SnackBarBehavior.floating,
+    content: Text(
+      'Selected Seat Is Reserved By Another Person!! Try Other Seats.',
+      textAlign: TextAlign.left,
+      style: TextStyle(color: Colors.red),
+    ),
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -36,6 +48,25 @@ class _RegisterPassengerState
 
     final trip = Provider.of<Trips>(context)
         .finadById(tripId);
+    // this one becomes true when seat number reserved while i am reserving
+    final isValidated =
+        Provider.of<Trips>(context, listen: false)
+            .seatValidation(tripId, seatNo);
+    if (isValidated && validatorCondition) {
+      _scaffold.currentState
+          .showSnackBar(snackBar);
+
+      WidgetsBinding.instance
+          .addPostFrameCallback((_) {
+        // Add Your Code here.
+        Future.delayed(
+            const Duration(milliseconds: 5000),
+            () {
+// Here you can write your code
+          Navigator.of(context).pop();
+        });
+      });
+    }
 
     final languageIndex =
         Provider.of<Setting>(context)
@@ -58,9 +89,22 @@ class _RegisterPassengerState
                 seatNo,
                 trip.startingPlace[
                     _selectedSPIndex]);
+        // _scaffold.currentState.showSnackBar(
+        //   SnackBar(
+        //     content: Text(
+        //       'Seat No. ' +
+        //           seatNo.toString() +
+        //           ' Reserved For ' +
+        //           _fullName,
+        //     ),
+        //     duration: Duration(seconds: 2),
+        //   ),
+        // );
+        validatorCondition = false;
         Navigator.of(context).pushNamed(
             PaymentScreen.routeName,
             arguments: {
+              'delete': false,
               'companyId': trip.companyId,
               'place': trip.startingCity
                           .join(' / ') ==
@@ -68,11 +112,13 @@ class _RegisterPassengerState
                   ? trip.destinationCity
                       .join(' / ')
                   : trip.startingCity.join(' / ')
-            });
+            }).then(
+            (value) => validatorCondition = true);
       }
     }
 
     return Scaffold(
+      key: _scaffold,
       appBar: AppBar(
         title: Text('Passenger registration'),
       ),
@@ -337,11 +383,14 @@ class _RegisterPassengerState
                     Container(
                       width: double.infinity,
                       child: RaisedButton.icon(
-                          onPressed: () {
-                            setState(() {
-                              _saveForm();
-                            });
-                          },
+                          onPressed: isValidated &&
+                                  validatorCondition
+                              ? null
+                              : () {
+                                  setState(() {
+                                    _saveForm();
+                                  });
+                                },
                           color: Theme.of(context)
                               .primaryColor,
                           icon: Icon(

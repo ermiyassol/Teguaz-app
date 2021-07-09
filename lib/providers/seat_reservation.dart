@@ -48,6 +48,7 @@ class SeatReservation with ChangeNotifier {
       String phoneNumber,
       int seatNo,
       String startingPlace) async {
+    passengerTripId = tripId;
     final newPassenger = new Passenger(
         fullName: fullName,
         deviceId: deviceId,
@@ -126,6 +127,15 @@ class SeatReservation with ChangeNotifier {
         await http.delete(url);
       } catch (error) {}
     }
+  }
+
+  Future<void> deletePassengerwithId(
+      String tripId, String passengerId) async {
+    var url = Uri.parse(
+        'https://teguaz-web-app-default-rtdb.firebaseio.com/trip/$tripId/passengers/$passengerId.json');
+    try {
+      await http.delete(url);
+    } catch (error) {}
   }
 
   paymentPerformed() {
